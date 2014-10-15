@@ -26,11 +26,12 @@ AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([1.14.1 no-dist-gzip dist-xz])
 AC_CONFIG_FILES([
 	Makefile
-	src/Makefile])
+	src/Makefile
+])
 
 GETTEXT_PACKAGE=simplicity
 AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Package name for gettext]])
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Package name for gettext])
 
 # Checks for programs.
 AC_PROG_CXX
