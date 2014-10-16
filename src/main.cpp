@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 	if (args.count("version"))
 	{
 		print_version();
-		return 0;
+		return 1;
 	}
 
 	return 0;
