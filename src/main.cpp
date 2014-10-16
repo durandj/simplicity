@@ -1,6 +1,7 @@
 #include "main.h"
 
 #include <boost/program_options.hpp>
+#include <glibmm/main.h>
 #include <iostream>
 
 namespace po = boost::program_options;
@@ -32,6 +33,10 @@ int main(int argc, char **argv)
 		print_version();
 		return 1;
 	}
+
+	Glib::RefPtr<Glib::MainLoop> pMainLoop(Glib::MainLoop::create());
+	pMainLoop->run();
+	pMainLoop->quit();
 
 	return 0;
 }
