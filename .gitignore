@@ -2,6 +2,7 @@
 *.swp
 .deps
 .ruby-version
+.sass-cache
 aclocal.m4
 autoscan.log
 autom4te.cache
