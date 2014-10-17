@@ -8,7 +8,7 @@ You'll need a C++ compiler and the automake toolchain to get started.
 ### Compiling
 Run the following commands to build simplicity:
 
-	autoreconf
+	autoreconf -i
 	./configure
 	make
 
