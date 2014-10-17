@@ -1,3 +1,0 @@
-AM_CPPFLAGS = \
-	$(BOOST_CPPFLAGS)
-
