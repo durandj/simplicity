@@ -1,6 +1,7 @@
 *.swo
 *.swp
 .deps
+.ruby-version
 aclocal.m4
 autoscan.log
 autom4te.cache
