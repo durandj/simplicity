@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Simplicity</title>
+    <title>Logging Debug</title>
     <meta name="description" content="Simplicity is a simple Window Manager that is heavily inspired by the Awesome window manager. I liked the idea but wanted something just slightly different.
 ">
 
     <link rel="stylesheet" href="/simplicity/css/main.css">
-    <link rel="canonical" href="http://durandj.github.io/simplicity/">
+    <link rel="canonical" href="http://durandj.github.io/simplicity/update/2014/10/20/logging-debug.html">
 </head>
 
 
@@ -54,31 +54,37 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="home">
+        <div class="post">
 
-  <h1 class="page-heading">Posts</h1>
+  <header class="post-header">
+    <h1 class="post-title">Logging Debug</h1>
+    <p class="post-meta">Oct 20, 2014</p>
+  </header>
 
-  <ul class="post-list">
-    
-      <li>
-        <span class="post-meta">Oct 20, 2014</span>
+  <article class="post-content">
+    <p>I’ve been working on getting logging added since that will definitely help with tracking down issues and makeing sure all goes as it should. Since I’m already using Boost I decided to go with Boost.Log. It took a bit of work to get setup since I’m still new to using the AutoConf toolchain with Boost and I’m a bit rusty with C++ but in the end I got it. It does some really basic logging. My next goal is to make logging a bit easier to use since I’ll be more inclined to log things if I don’t have to jump through hoops to do it. Currently logging looks something like this:</p>
 
-        <h2>
-          <a class="post-link" href="/simplicity/update/2014/10/20/logging-debug.html">Logging Debug</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Oct 17, 2014</span>
+<pre><code>#include &lt;boost/log/core.hpp&gt;
 
-        <h2>
-          <a class="post-link" href="/simplicity/jekyll/update/2014/10/17/initial-commit.html">Initial Commit</a>
-        </h2>
-      </li>
-    
-  </ul>
+#include "main.h"
 
-  <p class="rss-subscribe">subscribe <a href="/simplicity/feed.xml">via RSS</a></p>
+void log_something(void)
+{
+	BOOST_LOG_SEV(get_global_logger(), boost::log::trivial::debug) &lt;&lt; "Yay!";
+}
+</code></pre>
+
+<p>I ommitted a bit more code but that’s the general idea. That’s not very friendly. I want to make this a bit easier to do so I’m going to add some helper functions so that you can just do this:</p>
+
+<pre><code>log_debug() &lt;&lt; "Yay!";
+</code></pre>
+
+<p>That’s what I’m looking at for now. I would like to make things even better but I need to do some testing first and I want to keep my one step at a time approach.</p>
+
+<p>I also need to do some work on the blog. I want to theme it at some point and it really needs some tools to make generating posts a bit easier. I’ll do some work on that when I need a break.</p>
+
+
+  </article>
 
 </div>
 
