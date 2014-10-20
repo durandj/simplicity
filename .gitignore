@@ -3,6 +3,7 @@
 .deps
 .ruby-version
 .sass-cache
+_site
 aclocal.m4
 autoscan.log
 autom4te.cache
