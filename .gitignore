@@ -2,6 +2,8 @@
 *.swp
 .deps
 .ruby-version
+.sass-cache
+_site
 aclocal.m4
 autoscan.log
 autom4te.cache
@@ -15,6 +17,7 @@ config.status
 config.sub
 configure
 depcomp
+Gemfile.lock
 install-sh
 Makefile
 Makefile.in
