@@ -11,6 +11,8 @@
 #include <glibmm/main.h>
 #include <iostream>
 
+#include "log.h"
+
 namespace logging = boost::log;
 namespace po      = boost::program_options;
 using namespace std;
@@ -47,13 +49,13 @@ int main(int argc, char **argv)
 
 	init_logging();
 
-	BOOST_LOG_SEV(GLOBAL_LOGGER, logging::trivial::debug) << "Starting main GLib loop";
+	global_log_trace << "Starting main GLib loop";
 
 	Glib::RefPtr<Glib::MainLoop> pMainLoop(Glib::MainLoop::create());
 	pMainLoop->run();
 	pMainLoop->quit();
 
-	BOOST_LOG_SEV(GLOBAL_LOGGER, logging::trivial::debug) << "Ending main GLib loop";
+	global_log_trace << "Ending main GLib loop";
 
 	return 0;
 }
@@ -86,3 +88,4 @@ void print_version(void)
 			"This is free software; see the source for copying conditions.\n"
 			"There is NO warranty." << endl;
 }
+
