@@ -26,6 +26,9 @@ static Glib::RefPtr<Glib::MainLoop> pMainLoop;
 
 void init_logging(void);
 void handler_sig(const boost::system::error_code &error, int signal_number);
+void handler_sig_hup(const boost::system::error_code &error, int signal_number);
+void handler_sig_int(const boost::system::error_code &error, int signal_number);
+void handler_sig_term(const boost::system::error_code &error, int signal_number);
 void print_version(void);
 
 int main(int argc, char **argv)
@@ -97,7 +100,31 @@ void init_logging(void)
 
 void handler_sig(const boost::system::error_code &error, int signal_number)
 {
-	global_log_debug << "This is only a test";
+	switch (signal_number)
+	{
+	case SIGHUP:
+		handler_sig_hup(error, signal_number);
+		break;
+	case SIGINT:
+		handler_sig_int(error, signal_number);
+		break;
+	case SIGTERM:
+		handler_sig_term(error, signal_number);
+		break;
+	}
+}
+
+void handler_sig_hup(const boost::system::error_code &error, int signal_number)
+{
+}
+
+void handler_sig_int(const boost::system::error_code &error, int signal_number)
+{
+	pMainLoop->quit();
+}
+
+void handler_sig_term(const boost::system::error_code &error, int signal_number)
+{
 	pMainLoop->quit();
 }
 
