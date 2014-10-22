@@ -1,5 +1,6 @@
 #include "main.h"
 
+#include <boost/asio.hpp>
 #include <boost/log/attributes.hpp>
 #include <boost/log/core.hpp>
 #include <boost/log/expressions.hpp>
@@ -8,18 +9,23 @@
 #include <boost/log/utility/setup/common_attributes.hpp>
 #include <boost/log/utility/setup/console.hpp>
 #include <boost/program_options.hpp>
+#include <boost/thread.hpp>
 #include <glibmm/main.h>
 #include <iostream>
 
 #include "log.h"
 
+namespace asio    = boost::asio;
 namespace logging = boost::log;
 namespace po      = boost::program_options;
+
 using namespace std;
 
 static logging::sources::severity_logger<logging::trivial::severity_level> GLOBAL_LOGGER;
+static Glib::RefPtr<Glib::MainLoop> pMainLoop;
 
 void init_logging(void);
+void handler_sig(const boost::system::error_code &error, int signal_number);
 void print_version(void);
 
 int main(int argc, char **argv)
@@ -49,11 +55,19 @@ int main(int argc, char **argv)
 
 	init_logging();
 
+	global_log_trace << "Registering OS signal handlers...";
+	asio::io_service io_service;
+	asio::signal_set signals(io_service, SIGINT, SIGTERM, SIGHUP);
+	signals.async_wait(handler_sig);
+
+	boost::thread service_thread(boost::bind(&asio::io_service::run, &io_service));
+
 	global_log_trace << "Starting main GLib loop";
 
-	Glib::RefPtr<Glib::MainLoop> pMainLoop(Glib::MainLoop::create());
+	pMainLoop = Glib::RefPtr<Glib::MainLoop>(Glib::MainLoop::create());
 	pMainLoop->run();
-	pMainLoop->quit();
+
+	io_service.stop();
 
 	global_log_trace << "Ending main GLib loop";
 
@@ -79,6 +93,12 @@ void init_logging(void)
 		),
 		logging::keywords::auto_flush = true
 	);
+}
+
+void handler_sig(const boost::system::error_code &error, int signal_number)
+{
+	global_log_debug << "This is only a test";
+	pMainLoop->quit();
 }
 
 void print_version(void)
