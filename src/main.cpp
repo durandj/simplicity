@@ -14,6 +14,7 @@
 #include <iostream>
 
 #include "log.h"
+#include "setup.h"
 
 namespace asio    = boost::asio;
 namespace logging = boost::log;
