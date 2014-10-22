@@ -20,6 +20,7 @@ namespace asio    = boost::asio;
 namespace logging = boost::log;
 namespace po      = boost::program_options;
 
+using namespace simplicity;
 using namespace std;
 
 static logging::sources::severity_logger<logging::trivial::severity_level> GLOBAL_LOGGER;
