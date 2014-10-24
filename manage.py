@@ -8,6 +8,7 @@ import dateutil.tz
 import jinja2
 import os
 import os.path
+import string
 import subprocess
 
 # pylint: disable=invalid-name
@@ -32,7 +33,7 @@ categories: {{ categories }}
 		timestamp.year,
 		timestamp.month,
 		timestamp.day,
-		name.lower().replace(' ', '-')
+		filter(lambda c: c not in string.punctuation,name).lower().replace(' ', '-')
 	)
 	path     = os.path.dirname(__file__)
 	filepath = os.path.join(path, '_posts', filename)
