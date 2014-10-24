@@ -33,6 +33,8 @@ GETTEXT_PACKAGE=simplicity
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Package name for gettext])
 
+AC_DEFINE([BOOST_ALL_DYN_LINK], [], [Dynamically link Boost])
+
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
