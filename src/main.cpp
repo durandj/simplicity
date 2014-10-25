@@ -44,8 +44,8 @@ int main(int argc, char **argv)
 
 void print_version(void)
 {
-	cout << PACKAGE_STRING << endl;
-	cout << "Copyright (C) 2014 James Durand\n"
+	cerr << PACKAGE_STRING << endl;
+	cerr << "Copyright (C) 2014 James Durand\n"
 			"This is free software; see the source for copying conditions.\n"
 			"There is NO warranty." << endl;
 }
