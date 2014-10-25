@@ -8,6 +8,7 @@
 #include <boost/log/utility/setup/common_attributes.hpp>
 #include <boost/log/utility/setup/console.hpp>
 #include <iostream>
+#include <cstdlib>
 
 #include "log.h"
 
@@ -16,6 +17,8 @@ namespace logging = boost::log;
 
 namespace simplicity
 {
+	const char *SimplicityApplication::ENV_VAR_DISPLAY_NAME = "SIMPLICITY_DISPLAY";
+
 	SimplicityApplication &SimplicityApplication::get_instance(void)
 	{
 		static SimplicityApplication singleton;
@@ -27,13 +30,16 @@ namespace simplicity
 		m_GlobalLogger(),
 		m_IOService(),
 		m_Signals(m_IOService, SIGINT, SIGTERM, SIGHUP),
-		m_pMainLoop(Glib::MainLoop::create())
+		m_pMainLoop(Glib::MainLoop::create()),
+		m_sDisplayName("")
 	{
 		initialize_logging();
 
 		m_Signals.async_wait(boost::bind(&SimplicityApplication::handler_sig, this, _1, _2));
 
 		m_ServiceThread = boost::thread(boost::bind(&asio::io_service::run, &m_IOService));
+
+		set_display_name("");
 	}
 
 	SimplicityApplication::~SimplicityApplication(void)
@@ -59,6 +65,27 @@ namespace simplicity
 
 		m_pMainLoop->quit();
 		m_IOService.stop();
+	}
+
+	string SimplicityApplication::get_display_name(void) const
+	{
+		return m_sDisplayName;
+	}
+
+	void SimplicityApplication::set_display_name(string sDisplay)
+	{
+		if (sDisplay.empty())
+		{
+			char *pEnvVar = std::getenv(SimplicityApplication::ENV_VAR_DISPLAY_NAME);
+			if (pEnvVar)
+				m_sDisplayName = pEnvVar;
+			else
+				m_sDisplayName = "0.0";
+		}
+		else
+			m_sDisplayName = sDisplay;
+
+		putenv((char *)("DISPLAY=" + m_sDisplayName).c_str());
 	}
 
 	void SimplicityApplication::handler_sig(const boost::system::error_code &error, int signal_number)
