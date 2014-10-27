@@ -14,11 +14,13 @@ void print_version(void);
 
 int main(int argc, char **argv)
 {
-	po::options_description program_desc("Simplicity window manager");
+	string sDisplayName;
 
+	po::options_description program_desc("Simplicity window manager");
 	program_desc.add_options()
-		("help",    "Display usage")
-		("version", "Print simplicity version")
+		("help",      "Display usage")
+		("version",   "Print simplicity version")
+		("display",   po::value<string>(&sDisplayName)->default_value(""), "The display name to use. 0.0 by default")
 	;
 
 	po::variables_map args;
@@ -37,7 +39,9 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	SimplicityApplication::get_instance().run();
+	SimplicityApplication *pApp = &SimplicityApplication::get_instance();
+	pApp->set_display_name(sDisplayName);
+	pApp->run();
 
 	return 0;
 }
