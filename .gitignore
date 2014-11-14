@@ -1,6 +1,7 @@
 *.swo
 *.swp
 .deps
+.dirstamp
 .ruby-version
 .sass-cache
 _site
