@@ -3,7 +3,11 @@
 .ruby-version
 .sass-cache
 _site
+cmake_install.cmake
+config.h
 configure
+CMakeCache.txt
+CMakeFiles
 Gemfile.lock
 Makefile
 simplicity
