@@ -1,7 +1,8 @@
 #pragma once
 
-#define Simplicity_VERSION_MAJOR @Simplicity_VERSION_MAJOR@
-#define Simplicity_VERSION_MINOR @Simplicity_VERSION_MINOR@
-#define Simplicity_VERSION_PATCH @Simplicity_VERSION_PATCH@
-#define Simplicity_VERSION_BUILD @Simplicity_VERSION_BUILD@
+#define SIMPLICITY_VERSION_MAJOR @Simplicity_VERSION_MAJOR@
+#define SIMPLICITY_VERSION_MINOR @Simplicity_VERSION_MINOR@
+#define SIMPLICITY_VERSION_PATCH @Simplicity_VERSION_PATCH@
+#define SIMPLICITY_VERSION_BUILD @Simplicity_VERSION_BUILD@
+#define SIMPLICITY_VERSION @Simplicity_VERSION@
 
