@@ -1,29 +1,15 @@
 *.swo
 *.swp
-.deps
 .ruby-version
 .sass-cache
 _site
-aclocal.m4
-autoscan.log
-autom4te.cache
-compile
-config.guess
+cmake_install.cmake
 config.h
-config.h.in
-config.h.in~
-config.log
-config.status
-config.sub
-configure
-depcomp
+CMakeCache.txt
+CMakeFiles
 Gemfile.lock
-install-sh
 Makefile
-Makefile.in
-missing
 simplicity
-stamp-h1
 
 /*.tar.gz
 
