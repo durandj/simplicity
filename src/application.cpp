@@ -1,4 +1,4 @@
-#include "application.h"
+#include "application.hpp"
 
 #include <boost/log/attributes.hpp>
 #include <boost/log/core.hpp>
@@ -10,7 +10,7 @@
 #include <iostream>
 #include <cstdlib>
 
-#include "log.h"
+#include "log.hpp"
 
 namespace asio    = boost::asio;
 namespace logging = boost::log;

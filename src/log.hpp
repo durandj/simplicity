@@ -1,6 +1,6 @@
 #pragma once
 
-#include "application.h"
+#include "application.hpp"
 
 #define log_trace(logger)   BOOST_LOG_SEV(logger, boost::log::trivial::trace)
 #define log_debug(logger)   BOOST_LOG_SEV(logger, boost::log::trivial::debug)

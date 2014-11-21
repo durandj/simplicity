@@ -1,9 +1,9 @@
-#include "main.h"
+#include "main.hoo"
 
 #include <boost/program_options.hpp>
 #include <iostream>
 
-#include "application.h"
+#include "application.hpp"
 
 namespace po = boost::program_options;
 

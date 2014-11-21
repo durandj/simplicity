@@ -1,6 +1,6 @@
 #pragma once
 
-#include "config.h"
+#include "config.hpp"
 
 int main(int argc, char **argv);
 
