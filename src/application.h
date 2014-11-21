@@ -6,7 +6,7 @@
 #include <boost/thread.hpp>
 #include <glibmm.h>
 
-#include <config.h>
+#include "config.h"
 #include "setup.h"
 
 namespace simplicity
