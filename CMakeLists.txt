@@ -38,14 +38,8 @@ find_package(Boost REQUIRED
 )
 
 include_directories(${Boost_INCLUDE_DIRS})
-
-pkg_check_modules(GLIBMM glibmm-2.4 REQUIRED)
-
-link_directories(${GLIBMM_LIBRARY_DIRS})
-
-include_directories(${GLIBMM_INCLUDE_DIRS})
 # End of libraries and includes
 
 add_executable(simplicity "${SRC}/main.cpp" "${SRC}/application.cpp")
-target_link_libraries(simplicity ${Boost_LIBRARIES} ${GLIBMM_LIBRARIES})
+target_link_libraries(simplicity ${Boost_LIBRARIES})
 
