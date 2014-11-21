@@ -27,10 +27,11 @@ namespace simplicity
 	}
 
 	SimplicityApplication::SimplicityApplication(void) :
+		m_bRunning(false),
+		m_pXConnection(nullptr),
 		m_GlobalLogger(),
 		m_IOService(),
 		m_Signals(m_IOService, SIGINT, SIGTERM, SIGHUP),
-		m_pMainLoop(Glib::MainLoop::create()),
 		m_sDisplayName("")
 	{
 		initialize_logging();
@@ -54,16 +55,21 @@ namespace simplicity
 
 	void SimplicityApplication::run(void)
 	{
-		global_log_trace << "Starting main GLib loop";
+		global_log_trace << "Starting main application loop";
 
-		m_pMainLoop->run();
+		m_pXConnection = xcb_connect(NULL, NULL);
+
+		m_bRunning = true;
+		// TODO:
+
+		//m_pMainLoop->run();
 	}
 
 	void SimplicityApplication::quit(void)
 	{
-		global_log_trace << "Ending main GLib loop";
+		global_log_trace << "Ending main application loop";
 
-		m_pMainLoop->quit();
+		//m_pMainLoop->quit();
 		m_IOService.stop();
 	}
 

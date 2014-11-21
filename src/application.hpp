@@ -4,21 +4,22 @@
 #include <boost/log/core.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/thread.hpp>
-#include <glibmm.h>
+#include <xcb/xcb.h>
 
-#include "config.h"
-#include "setup.h"
+#include "config.hpp"
+#include "setup.hpp"
 
 namespace simplicity
 {
 	class SimplicityApplication
 	{
 	private:
+		bool m_bRunning;
+		xcb_connection_t *m_pXConnection;
 		boost::log::sources::severity_logger<boost::log::trivial::severity_level> m_GlobalLogger;
 		boost::asio::io_service m_IOService;
 		boost::asio::signal_set m_Signals;
 		boost::thread m_ServiceThread;
-		Glib::RefPtr<Glib::MainLoop> m_pMainLoop;
 		string m_sDisplayName;
 
 		SimplicityApplication(void);
