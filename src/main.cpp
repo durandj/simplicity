@@ -1,4 +1,4 @@
-#include "main.hoo"
+#include "main.hpp"
 
 #include <boost/program_options.hpp>
 #include <iostream>

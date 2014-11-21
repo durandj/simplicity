@@ -15,8 +15,8 @@ set(
 set(SRC "${PROJECT_SOURCE_DIR}/src")
 
 configure_file(
-	"${SRC}/config.h.in"
-	"${SRC}/config.h"
+	"${SRC}/config.hpp.in"
+	"${SRC}/config.hpp"
 )
 
 include_directories("${PROJECT_BINARY_DIR}")
