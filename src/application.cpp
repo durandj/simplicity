@@ -59,17 +59,21 @@ namespace simplicity
 
 		m_pXConnection = xcb_connect(NULL, NULL);
 
-		m_bRunning = true;
-		// TODO:
+		xcb_generic_event_t *pEvent;
 
-		//m_pMainLoop->run();
+		m_bRunning = true;
+		while (m_bRunning && (pEvent = xcb_wait_for_event(m_pXConnection)))
+		{
+		}
+
+		xcb_disconnect(m_pXConnection);
 	}
 
 	void SimplicityApplication::quit(void)
 	{
 		global_log_trace << "Ending main application loop";
 
-		//m_pMainLoop->quit();
+		m_bRunning = false;
 		m_IOService.stop();
 	}
 
