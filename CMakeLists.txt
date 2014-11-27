@@ -42,10 +42,13 @@ find_package(Boost REQUIRED
 include_directories(${Boost_INCLUDE_DIRS})
 
 pkg_check_modules(XCB xcb REQUIRED)
-
 include_directories(${XCB_INCLUDE_DIRS})
+
+pkg_check_modules(XCB_UTIL xcb-util REQUIRED)
+include_directories(${XCB_UTIL_INCLUDE_DIRS})
+
 # End of libraries and includes
 
 add_executable(simplicity "${SRC}/main.cpp" "${SRC}/application.cpp")
-target_link_libraries(simplicity ${Boost_LIBRARIES} ${XCB_LIBRARIES})
+target_link_libraries(simplicity ${Boost_LIBRARIES} ${XCB_LIBRARIES} ${XCB_UTIL_LIBRARIES})
 
