@@ -90,7 +90,7 @@ namespace simplicity
 			if (pEnvVar)
 				m_sDisplayName = pEnvVar;
 			else
-				m_sDisplayName = "0.0";
+				m_sDisplayName = ":0.0";
 		}
 		else
 			m_sDisplayName = sDisplay;
