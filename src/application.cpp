@@ -57,14 +57,50 @@ namespace simplicity
 	{
 		global_log_trace << "Starting main application loop";
 
-		m_pXConnection = xcb_connect(NULL, NULL);
+		int nScreenNum = 0;
+		m_pXConnection = xcb_connect(m_sDisplayName.c_str(), &nScreenNum);
+
+		// Nothing should happen if there is no error.
+		switch (xcb_connection_has_error(m_pXConnection))
+		{
+		case XCB_CONN_ERROR:
+			global_log_error << "Socket, pipe, or stream error prevented connetion to X server";
+			xcb_disconnect(m_pXConnection);
+			return;
+		case XCB_CONN_CLOSED_EXT_NOTSUPPORTED:
+			global_log_error << "Extension not supported. Could not connect to X server";
+			xcb_disconnect(m_pXConnection);
+			return;
+		case XCB_CONN_CLOSED_MEM_INSUFFICIENT:
+			global_log_error << "Not enough memory. Could not connect to X server";
+			xcb_disconnect(m_pXConnection);
+			return;
+		case XCB_CONN_CLOSED_REQ_LEN_EXCEED:
+			global_log_error << "Exceeded request length. Could not connect to X server";
+			xcb_disconnect(m_pXConnection);
+			return;
+		case XCB_CONN_CLOSED_PARSE_ERR:
+			global_log_error << "Could not parse display string. Could not connect to X server";
+			xcb_disconnect(m_pXConnection);
+			return;
+		case XCB_CONN_CLOSED_INVALID_SCREEN:
+			global_log_error << "Could not connect to X server because an invalid screen was selected";
+			xcb_disconnect(m_pXConnection);
+			return;
+		}
+
+		xcb_screen_iterator_t iter = xcb_setup_roots_iterator(xcb_get_setup(m_pXConnection));
 
 		xcb_generic_event_t *pEvent;
 
 		m_bRunning = true;
 		while (m_bRunning && (pEvent = xcb_wait_for_event(m_pXConnection)))
 		{
+			delete pEvent; // TODO: necessary?
 		}
+
+		if (m_bRunning && pEvent == nullptr)
+			global_log_error << "A fatal error occurred";
 
 		xcb_disconnect(m_pXConnection);
 	}
