@@ -4,7 +4,7 @@
 .sass-cache
 _site
 cmake_install.cmake
-config.h
+config.hpp
 CMakeCache.txt
 CMakeFiles
 Gemfile.lock
