@@ -49,6 +49,7 @@ include_directories(${XCB_UTIL_INCLUDE_DIRS})
 # End of libraries and includes
 
 set(CMAKE_CXX_FLAGS_DEBUG -Wall)
+set(CMAKE_C_FLAGS_DEBUG -Wall)
 
 add_executable(simplicity "${SRC}/main.cpp" "${SRC}/application.cpp")
 target_link_libraries(simplicity ${Boost_LIBRARIES} ${XCB_LIBRARIES} ${XCB_UTIL_LIBRARIES})
