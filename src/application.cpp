@@ -90,6 +90,23 @@ namespace simplicity
 		}
 
 		xcb_screen_iterator_t iter = xcb_setup_roots_iterator(xcb_get_setup(m_pXConnection));
+		for (int i = 0; i != nScreenNum; i++)
+			xcb_screen_next(&iter);
+
+		m_pRootScreen = iter.data;
+		if (m_pRootScreen == nullptr)
+		{
+			global_log_error << "Could not get the current screen. Exiting";
+			xcb_disconnect(m_pXConnection);
+			return;
+		}
+
+		global_log_debug << "Root screen dimensions: "
+						 << m_pRootScreen->width_in_pixels
+						 << "x"
+						 << m_pRootScreen->height_in_pixels
+						 << "Root window: "
+						 << m_pRootScreen->root;
 
 		xcb_generic_event_t *pEvent;
 

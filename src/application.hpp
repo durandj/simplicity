@@ -16,6 +16,7 @@ namespace simplicity
 	private:
 		bool m_bRunning;
 		xcb_connection_t *m_pXConnection;
+		xcb_screen_t *m_pRootScreen;
 		boost::log::sources::severity_logger<boost::log::trivial::severity_level> m_GlobalLogger;
 		boost::asio::io_service m_IOService;
 		boost::asio::signal_set m_Signals;
