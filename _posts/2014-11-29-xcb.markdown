@@ -1,0 +1,9 @@
+---
+layout:     post
+title:      "XCB!"
+date:       2014-11-29T12:50:19-06:00
+categories: update
+---
+
+I've finally got XCB working well enough that I could merge it. Now I can hopefully start actually doing some work.
+
