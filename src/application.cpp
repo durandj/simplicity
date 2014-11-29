@@ -141,12 +141,15 @@ namespace simplicity
 		switch (signal_number)
 		{
 		case SIGHUP:
+			global_log_trace << "Received OS SIGHUP";
 			handler_sig_hup(error, signal_number);
 			break;
 		case SIGINT:
+			global_log_trace << "Received OS SIGINT";
 			handler_sig_int(error, signal_number);
 			return;
 		case SIGTERM:
+			global_log_trace << "Received OS SIGTERM";
 			handler_sig_term(error, signal_number);
 			return;
 		default:
