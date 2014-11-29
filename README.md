@@ -11,3 +11,8 @@ Run the following commands to build simplicity:
 	cmake .
 	make
 
+To compile with debug options and flags turned on use:
+
+	cmake -DCMAKE_BUILD_TYPE=Debug .
+	make
+
