@@ -17,7 +17,7 @@ namespace logging = boost::log;
 
 namespace simplicity
 {
-	const char *SimplicityApplication::ENV_VAR_DISPLAY_NAME = "SIMPLICITY_DISPLAY";
+	const string SimplicityApplication::ENV_VAR_DISPLAY_NAME = "DISPLAY";
 
 	SimplicityApplication &SimplicityApplication::get_instance(void)
 	{
@@ -122,7 +122,7 @@ namespace simplicity
 	{
 		if (sDisplay.empty())
 		{
-			char *pEnvVar = std::getenv(SimplicityApplication::ENV_VAR_DISPLAY_NAME);
+			char *pEnvVar = std::getenv(SimplicityApplication::ENV_VAR_DISPLAY_NAME.c_str());
 			if (pEnvVar)
 				m_sDisplayName = pEnvVar;
 			else
@@ -131,7 +131,7 @@ namespace simplicity
 		else
 			m_sDisplayName = sDisplay;
 
-		putenv((char *)("DISPLAY=" + m_sDisplayName).c_str());
+		putenv((char *)(SimplicityApplication::ENV_VAR_DISPLAY_NAME + "=" + m_sDisplayName).c_str());
 	}
 
 	void SimplicityApplication::handler_sig(const boost::system::error_code &error, int signal_number)

@@ -30,7 +30,7 @@ namespace simplicity
 		void handler_sig_term(const boost::system::error_code &error, int signal_number);
 
 	public:
-		static const char *ENV_VAR_DISPLAY_NAME;
+		static const string ENV_VAR_DISPLAY_NAME;
 
 		static SimplicityApplication &get_instance(void);
 
