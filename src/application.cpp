@@ -17,6 +17,8 @@ namespace logging = boost::log;
 
 namespace simplicity
 {
+	bool check_xcb_connection(xcb_connection_t *pConnection);
+
 	const string SimplicityApplication::ENV_VAR_DISPLAY_NAME = "DISPLAY";
 
 	SimplicityApplication &SimplicityApplication::get_instance(void)
@@ -60,31 +62,8 @@ namespace simplicity
 		int nScreenNum = 0;
 		m_pXConnection = xcb_connect(m_sDisplayName.c_str(), &nScreenNum);
 
-		// Nothing should happen if there is no error.
-		switch (xcb_connection_has_error(m_pXConnection))
+		if (check_xcb_connection(m_pXConnection))
 		{
-		case XCB_CONN_ERROR:
-			global_log_error << "Socket, pipe, or stream error prevented connetion to X server";
-			xcb_disconnect(m_pXConnection);
-			return;
-		case XCB_CONN_CLOSED_EXT_NOTSUPPORTED:
-			global_log_error << "Extension not supported. Could not connect to X server";
-			xcb_disconnect(m_pXConnection);
-			return;
-		case XCB_CONN_CLOSED_MEM_INSUFFICIENT:
-			global_log_error << "Not enough memory. Could not connect to X server";
-			xcb_disconnect(m_pXConnection);
-			return;
-		case XCB_CONN_CLOSED_REQ_LEN_EXCEED:
-			global_log_error << "Exceeded request length. Could not connect to X server";
-			xcb_disconnect(m_pXConnection);
-			return;
-		case XCB_CONN_CLOSED_PARSE_ERR:
-			global_log_error << "Could not parse display string. Could not connect to X server";
-			xcb_disconnect(m_pXConnection);
-			return;
-		case XCB_CONN_CLOSED_INVALID_SCREEN:
-			global_log_error << "Could not connect to X server because an invalid screen was selected";
 			xcb_disconnect(m_pXConnection);
 			return;
 		}
@@ -207,6 +186,33 @@ namespace simplicity
 	void SimplicityApplication::handler_sig_term(const boost::system::error_code &error, int signal_number)
 	{
 		quit();
+	}
+
+	bool check_xcb_connection(xcb_connection_t *pConnection)
+	{
+		switch (xcb_connection_has_error(pConnection))
+		{
+		case XCB_CONN_ERROR:
+			global_log_error << "Socket, pipe, or stream error prevented connetion to X server";
+			return true;
+		case XCB_CONN_CLOSED_EXT_NOTSUPPORTED:
+			global_log_error << "Extension not supported. Could not connect to X server";
+			return true;
+		case XCB_CONN_CLOSED_MEM_INSUFFICIENT:
+			global_log_error << "Not enough memory. Could not connect to X server";
+			return true;
+		case XCB_CONN_CLOSED_REQ_LEN_EXCEED:
+			global_log_error << "Exceeded request length. Could not connect to X server";
+			return true;
+		case XCB_CONN_CLOSED_PARSE_ERR:
+			global_log_error << "Could not parse display string. Could not connect to X server";
+			return true;
+		case XCB_CONN_CLOSED_INVALID_SCREEN:
+			global_log_error << "Could not connect to X server because an invalid screen was selected";
+			return true;
+		default:
+			return false;
+		}
 	}
 }
 
