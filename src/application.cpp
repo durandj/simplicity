@@ -41,8 +41,6 @@ namespace simplicity
 		m_Signals.async_wait(boost::bind(&SimplicityApplication::handler_sig, this, _1, _2));
 
 		m_ServiceThread = boost::thread(boost::bind(&asio::io_service::run, &m_IOService));
-
-		set_display_name("");
 	}
 
 	SimplicityApplication::~SimplicityApplication(void)
@@ -125,9 +123,15 @@ namespace simplicity
 				m_sDisplayName = pEnvVar;
 			else
 				m_sDisplayName = ":0.0";
+
+			global_log_trace << "No display set. Defaulting to " << m_sDisplayName;
 		}
 		else
+		{
 			m_sDisplayName = sDisplay;
+
+			global_log_trace << "Display set to " << sDisplay;
+		}
 
 		putenv((char *)(SimplicityApplication::ENV_VAR_DISPLAY_NAME + "=" + m_sDisplayName).c_str());
 	}
