@@ -55,7 +55,7 @@ namespace simplicity
 		return m_GlobalLogger;
 	}
 
-	void SimplicityApplication::run(void)
+	bool SimplicityApplication::run(void)
 	{
 		global_log_trace << "Starting main application loop";
 
@@ -65,7 +65,7 @@ namespace simplicity
 		if (check_xcb_connection(m_pXConnection))
 		{
 			xcb_disconnect(m_pXConnection);
-			return;
+			return 1;
 		}
 
 		xcb_screen_iterator_t iter = xcb_setup_roots_iterator(xcb_get_setup(m_pXConnection));
@@ -77,7 +77,7 @@ namespace simplicity
 		{
 			global_log_error << "Could not get the current screen. Exiting";
 			xcb_disconnect(m_pXConnection);
-			return;
+			return 1;
 		}
 
 		global_log_debug << "Root screen dimensions: "
@@ -99,6 +99,8 @@ namespace simplicity
 			global_log_error << "A fatal error occurred";
 
 		xcb_disconnect(m_pXConnection);
+
+		return 0;
 	}
 
 	void SimplicityApplication::quit(void)

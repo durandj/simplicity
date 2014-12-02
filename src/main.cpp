@@ -41,9 +41,7 @@ int main(int argc, char **argv)
 
 	SimplicityApplication *pApp = &SimplicityApplication::get_instance();
 	pApp->set_display_name(sDisplayName);
-	pApp->run();
-
-	return 0;
+	return pApp->run();
 }
 
 void print_version(void)
