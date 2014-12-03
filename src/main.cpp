@@ -40,6 +40,7 @@ int main(int argc, char **argv)
 	}
 
 	SimplicityApplication *pApp = &SimplicityApplication::get_instance();
+	pApp->initialize();
 	pApp->set_display_name(sDisplayName);
 	return pApp->run();
 }

@@ -25,8 +25,8 @@ namespace simplicity
 
 		SimplicityApplication(void);
 
-		void initialize(void);
 		void initialize_logging(void);
+		void initialize_x_connection(void);
 		void handler_sig_hup(const boost::system::error_code &error, int nSignal);
 		void handler_sig_int(const boost::system::error_code &error, int nSignal);
 		void handler_sig_term(const boost::system::error_code &error, int nSignal);
@@ -38,6 +38,7 @@ namespace simplicity
 
 		~SimplicityApplication(void);
 		boost::log::sources::severity_logger<boost::log::trivial::severity_level> &get_global_logger(void);
+		void initialize(void);
 		bool run(void);
 		void quit(void);
 		string get_display_name(void) const;

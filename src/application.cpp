@@ -29,15 +29,13 @@ namespace simplicity
 	}
 
 	SimplicityApplication::SimplicityApplication(void) :
-		m_bRunning(false),
+		m_bRunning(true),
 		m_pXConnection(nullptr),
 		m_GlobalLogger(),
 		m_IOService(),
 		m_Signals(m_IOService, SIGINT, SIGTERM, SIGHUP),
 		m_sDisplayName("")
 	{
-		initialize();
-
 		m_Signals.async_wait(boost::bind(&SimplicityApplication::handler_sig, this, _1, _2));
 
 		m_ServiceThread = boost::thread(boost::bind(&asio::io_service::run, &m_IOService));
@@ -55,35 +53,10 @@ namespace simplicity
 
 	bool SimplicityApplication::run(void)
 	{
+		if (!m_bRunning)
+			return true;
+
 		global_log_trace << "Starting main application loop";
-
-		int nScreenNum = 0;
-		m_pXConnection = xcb_connect(m_sDisplayName.c_str(), &nScreenNum);
-
-		if (check_xcb_connection(m_pXConnection))
-		{
-			xcb_disconnect(m_pXConnection);
-			return 1;
-		}
-
-		xcb_screen_iterator_t iter = xcb_setup_roots_iterator(xcb_get_setup(m_pXConnection));
-		for (int i = 0; i != nScreenNum; i++)
-			xcb_screen_next(&iter);
-
-		m_pRootScreen = iter.data;
-		if (m_pRootScreen == nullptr)
-		{
-			global_log_error << "Could not get the current screen. Exiting";
-			xcb_disconnect(m_pXConnection);
-			return 1;
-		}
-
-		global_log_debug << "Root screen dimensions: "
-						 << m_pRootScreen->width_in_pixels
-						 << "x"
-						 << m_pRootScreen->height_in_pixels
-						 << "Root window: "
-						 << m_pRootScreen->root;
 
 		xcb_generic_event_t *pEvent;
 
@@ -98,7 +71,7 @@ namespace simplicity
 
 		xcb_disconnect(m_pXConnection);
 
-		return 0;
+		return false;
 	}
 
 	void SimplicityApplication::quit(void)
@@ -188,6 +161,7 @@ namespace simplicity
 	void SimplicityApplication::initialize(void)
 	{
 		initialize_logging();
+		initialize_x_connection();
 	}
 
 	void SimplicityApplication::initialize_logging(void)
@@ -204,6 +178,38 @@ namespace simplicity
 			),
 			logging::keywords::auto_flush = true
 		);
+	}
+
+	void SimplicityApplication::initialize_x_connection(void)
+	{
+		int nScreenNum = 0;
+		m_pXConnection = xcb_connect(m_sDisplayName.c_str(), &nScreenNum);
+
+		if (check_xcb_connection(m_pXConnection))
+		{
+			xcb_disconnect(m_pXConnection);
+			m_bRunning = false;
+			return;
+		}
+
+		xcb_screen_iterator_t iter = xcb_setup_roots_iterator(xcb_get_setup(m_pXConnection));
+		for (int i = 0; i != nScreenNum; i++)
+			xcb_screen_next(&iter);
+
+		m_pRootScreen = iter.data;
+		if (m_pRootScreen == nullptr)
+		{
+			global_log_error << "Could not get the current screen. Exiting";
+			xcb_disconnect(m_pXConnection);
+			m_bRunning = false;
+		}
+
+		global_log_debug << "Root screen dimensions: "
+						 << m_pRootScreen->width_in_pixels
+						 << "x"
+						 << m_pRootScreen->height_in_pixels
+						 << "Root window: "
+						 << m_pRootScreen->root;
 	}
 
 	void SimplicityApplication::handler_sig_hup(const boost::system::error_code &error, int nSignal)
