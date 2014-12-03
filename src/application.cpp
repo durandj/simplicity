@@ -36,7 +36,7 @@ namespace simplicity
 		m_Signals(m_IOService, SIGINT, SIGTERM, SIGHUP),
 		m_sDisplayName("")
 	{
-		initialize_logging();
+		initialize();
 
 		m_Signals.async_wait(boost::bind(&SimplicityApplication::handler_sig, this, _1, _2));
 
@@ -183,6 +183,11 @@ namespace simplicity
 		delete pxcbReply;
 
 		return xcbAtom;
+	}
+
+	void SimplicityApplication::initialize(void)
+	{
+		initialize_logging();
 	}
 
 	void SimplicityApplication::initialize_logging(void)

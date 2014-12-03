@@ -25,6 +25,7 @@ namespace simplicity
 
 		SimplicityApplication(void);
 
+		void initialize(void);
 		void initialize_logging(void);
 		void handler_sig_hup(const boost::system::error_code &error, int nSignal);
 		void handler_sig_int(const boost::system::error_code &error, int nSignal);
