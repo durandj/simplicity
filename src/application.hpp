@@ -26,9 +26,9 @@ namespace simplicity
 		SimplicityApplication(void);
 
 		void initialize_logging(void);
-		void handler_sig_hup(const boost::system::error_code &error, int signal_number);
-		void handler_sig_int(const boost::system::error_code &error, int signal_number);
-		void handler_sig_term(const boost::system::error_code &error, int signal_number);
+		void handler_sig_hup(const boost::system::error_code &error, int nSignal);
+		void handler_sig_int(const boost::system::error_code &error, int nSignal);
+		void handler_sig_term(const boost::system::error_code &error, int nSignal);
 
 	public:
 		static const string ENV_VAR_DISPLAY_NAME;
@@ -41,7 +41,7 @@ namespace simplicity
 		void quit(void);
 		string get_display_name(void) const;
 		void set_display_name(string sDisplay);
-		void handler_sig(const boost::system::error_code &error, int signal_number);
+		void handler_sig(const boost::system::error_code &error, int nSignal);
 	};
 }
 

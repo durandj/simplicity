@@ -136,26 +136,26 @@ namespace simplicity
 		putenv((char *)(SimplicityApplication::ENV_VAR_DISPLAY_NAME + "=" + m_sDisplayName).c_str());
 	}
 
-	void SimplicityApplication::handler_sig(const boost::system::error_code &error, int signal_number)
+	void SimplicityApplication::handler_sig(const boost::system::error_code &error, int nSignal)
 	{
-		global_log_trace << "Received OS signal: " << signal_number;
+		global_log_trace << "Received OS signal: " << nSignal;
 
-		switch (signal_number)
+		switch (nSignal)
 		{
 		case SIGHUP:
 			global_log_trace << "Received OS SIGHUP";
-			handler_sig_hup(error, signal_number);
+			handler_sig_hup(error, nSignal);
 			break;
 		case SIGINT:
 			global_log_trace << "Received OS SIGINT";
-			handler_sig_int(error, signal_number);
+			handler_sig_int(error, nSignal);
 			return;
 		case SIGTERM:
 			global_log_trace << "Received OS SIGTERM";
-			handler_sig_term(error, signal_number);
+			handler_sig_term(error, nSignal);
 			return;
 		default:
-			global_log_debug << "Unhandled signal: " << signal_number;
+			global_log_debug << "Unhandled signal: " << nSignal;
 		}
 
 		m_Signals.async_wait(boost::bind(&SimplicityApplication::handler_sig, this, _1, _2));
@@ -177,19 +177,19 @@ namespace simplicity
 		);
 	}
 
-	void SimplicityApplication::handler_sig_hup(const boost::system::error_code &error, int signal_number)
+	void SimplicityApplication::handler_sig_hup(const boost::system::error_code &error, int nSignal)
 	{
 		// TODO: reload config
 
 		global_log_debug << "SIGHUP received";
 	}
 
-	void SimplicityApplication::handler_sig_int(const boost::system::error_code &error, int signal_number)
+	void SimplicityApplication::handler_sig_int(const boost::system::error_code &error, int nSignal)
 	{
 		quit();
 	}
 
-	void SimplicityApplication::handler_sig_term(const boost::system::error_code &error, int signal_number)
+	void SimplicityApplication::handler_sig_term(const boost::system::error_code &error, int nSignal)
 	{
 		quit();
 	}
