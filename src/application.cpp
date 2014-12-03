@@ -161,6 +161,30 @@ namespace simplicity
 		m_Signals.async_wait(boost::bind(&SimplicityApplication::handler_sig, this, _1, _2));
 	}
 
+	xcb_atom_t SimplicityApplication::get_atom(string sAtomName)
+	{
+		xcb_intern_atom_cookie_t xcbCookie = xcb_intern_atom(
+			m_pXConnection,
+			0,
+			sAtomName.length(),
+			sAtomName.c_str()
+		);
+
+		xcb_intern_atom_reply_t *pxcbReply = xcb_intern_atom_reply(
+			m_pXConnection,
+			xcbCookie,
+			NULL
+		);
+
+		if (pxcbReply == nullptr)
+			return 0;
+
+		xcb_atom_t xcbAtom = pxcbReply->atom;
+		delete pxcbReply;
+
+		return xcbAtom;
+	}
+
 	void SimplicityApplication::SimplicityApplication::initialize_logging(void)
 	{
 		logging::add_common_attributes();

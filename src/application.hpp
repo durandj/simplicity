@@ -42,6 +42,7 @@ namespace simplicity
 		string get_display_name(void) const;
 		void set_display_name(string sDisplay);
 		void handler_sig(const boost::system::error_code &error, int nSignal);
+		xcb_atom_t get_atom(string sAtomName);
 	};
 }
 
