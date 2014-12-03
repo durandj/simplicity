@@ -185,7 +185,7 @@ namespace simplicity
 		return xcbAtom;
 	}
 
-	void SimplicityApplication::SimplicityApplication::initialize_logging(void)
+	void SimplicityApplication::initialize_logging(void)
 	{
 		logging::add_common_attributes();
 
