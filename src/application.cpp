@@ -158,8 +158,10 @@ namespace simplicity
 		return xcbAtom;
 	}
 
-	void SimplicityApplication::initialize(void)
+	void SimplicityApplication::initialize(string sDisplay)
 	{
+		set_display_name(sDisplay);
+
 		initialize_logging();
 		initialize_x_connection();
 	}

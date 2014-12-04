@@ -38,7 +38,7 @@ namespace simplicity
 
 		~SimplicityApplication(void);
 		boost::log::sources::severity_logger<boost::log::trivial::severity_level> &get_global_logger(void);
-		void initialize(void);
+		void initialize(string sDisplay);
 		bool run(void);
 		void quit(void);
 		string get_display_name(void) const;
