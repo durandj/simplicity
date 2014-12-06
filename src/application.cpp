@@ -78,6 +78,7 @@ namespace simplicity
 		}
 
 		xcb_disconnect(m_pXConnection);
+		m_IOService.stop();
 
 		return false;
 	}
@@ -109,7 +110,6 @@ namespace simplicity
 		xcb_flush(m_pXConnection);
 
 		m_bRunning = false;
-		m_IOService.stop();
 	}
 
 	string SimplicityApplication::get_display_name(void) const
