@@ -85,6 +85,12 @@ namespace simplicity
 
 	void SimplicityApplication::quit(void)
 	{
+		if (!m_bRunning)
+		{
+			global_log_error << "Quit called but the application is not running";
+			return;
+		}
+
 		global_log_trace << "Ending main application loop";
 
 		xcb_client_message_event_t xcbEvent = {
