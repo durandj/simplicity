@@ -245,8 +245,8 @@ namespace simplicity
 		global_log_debug << "Root screen dimensions: "
 						 << m_pRootScreen->width_in_pixels
 						 << "x"
-						 << m_pRootScreen->height_in_pixels
-						 << "Root window: "
+						 << m_pRootScreen->height_in_pixels;
+		global_log_debug << "Root window: "
 						 << m_pRootScreen->root;
 	}
 
