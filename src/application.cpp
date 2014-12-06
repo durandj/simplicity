@@ -65,14 +65,17 @@ namespace simplicity
 		xcbAtomProtocols    = get_atom("WM_PROTOCOLS");
 
 		m_bRunning = true;
-		xcb_generic_event_t *pEvent;
-		while (m_bRunning && (pEvent = xcb_poll_for_event(m_pXConnection)))
+		while (m_bRunning)
 		{
+			xcb_generic_event_t *pEvent = xcb_poll_for_event(m_pXConnection);
+
+			if (pEvent == nullptr)
+				continue;
+
+			// TODO: do something with the event
+
 			delete pEvent; // TODO: necessary?
 		}
-
-		if (m_bRunning && pEvent == nullptr)
-			global_log_error << "A fatal error occurred";
 
 		xcb_disconnect(m_pXConnection);
 
@@ -82,6 +85,28 @@ namespace simplicity
 	void SimplicityApplication::quit(void)
 	{
 		global_log_trace << "Ending main application loop";
+
+		xcb_client_message_event_t xcbEvent = {
+			.response_type = XCB_CLIENT_MESSAGE,
+			.format        = 32,
+			.sequence      = 0,
+			.window        = m_pRootScreen->root,
+			.type          = xcbAtomProtocols,
+			.data          = {
+				(uint8_t)xcbAtomDeleteWindow,
+				XCB_CURRENT_TIME
+			}
+		};
+
+		xcb_send_event(
+			m_pXConnection,
+			false,
+			m_pRootScreen->root,
+			XCB_EVENT_MASK_NO_EVENT,
+			(char *)&xcbEvent
+		);
+
+		xcb_flush(m_pXConnection);
 
 		m_bRunning = false;
 		m_IOService.stop();
