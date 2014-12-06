@@ -17,6 +17,9 @@ namespace logging = boost::log;
 
 namespace simplicity
 {
+	xcb_atom_t xcbAtomDeleteWindow;
+	xcb_atom_t xcbAtomProtocols;
+
 	bool check_xcb_connection(xcb_connection_t *pConnection);
 
 	const string SimplicityApplication::ENV_VAR_DISPLAY_NAME = "DISPLAY";
@@ -58,10 +61,12 @@ namespace simplicity
 
 		global_log_trace << "Starting main application loop";
 
-		xcb_generic_event_t *pEvent;
+		xcbAtomDeleteWindow = get_atom("WM_DELETE_WINDOW");
+		xcbAtomProtocols    = get_atom("WM_PROTOCOLS");
 
 		m_bRunning = true;
-		while (m_bRunning && (pEvent = xcb_wait_for_event(m_pXConnection)))
+		xcb_generic_event_t *pEvent;
+		while (m_bRunning && (pEvent = xcb_poll_for_event(m_pXConnection)))
 		{
 			delete pEvent; // TODO: necessary?
 		}
