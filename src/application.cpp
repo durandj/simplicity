@@ -64,6 +64,45 @@ namespace simplicity
 		xcbAtomDeleteWindow = get_atom("WM_DELETE_WINDOW");
 		xcbAtomProtocols    = get_atom("WM_PROTOCOLS");
 
+		// TODO: remove test code
+		global_log_trace << "Testing drawing of screen";
+
+		xcb_drawable_t xcbWindow = m_pRootScreen->root;
+		xcb_gcontext_t xcbFg     = xcb_generate_id(m_pXConnection);
+		uint32_t mask            = XCB_GC_FOREGROUND | XCB_GC_GRAPHICS_EXPOSURES;
+		uint32_t values[2]       = {
+			m_pRootScreen->black_pixel,
+			0,
+		};
+
+		xcb_create_gc(m_pXConnection, xcbFg, xcbWindow, mask, values);
+
+		xcbWindow = xcb_generate_id(m_pXConnection);
+
+		mask      = XCB_CW_BACK_PIXEL | XCB_CW_EVENT_MASK;
+		values[0] = m_pRootScreen->white_pixel;
+		values[1] = XCB_EVENT_MASK_EXPOSURE;
+
+		xcb_create_window(
+			m_pXConnection,
+			XCB_COPY_FROM_PARENT,
+			xcbWindow,
+			m_pRootScreen->root,
+			0,
+			0,
+			150,
+			150,
+			10,
+			XCB_WINDOW_CLASS_INPUT_OUTPUT,
+			m_pRootScreen->root_visual,
+			mask,
+			values
+		);
+
+		xcb_map_window(m_pXConnection, xcbWindow);
+		xcb_flush(m_pXConnection);
+		// TODO: remove test code
+
 		m_bRunning = true;
 		while (m_bRunning)
 		{
