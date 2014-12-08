@@ -7,7 +7,7 @@
 #include <xcb/xcb.h>
 
 #include "config.hpp"
-#include "setup.hpp"
+#include "types.hpp"
 
 namespace simplicity
 {
