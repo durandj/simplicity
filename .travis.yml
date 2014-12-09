@@ -3,5 +3,5 @@ compiler:
     - gcc
     - clang
 
-script: ./configure && make
+script: cmake . && make
 
