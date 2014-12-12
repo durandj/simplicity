@@ -8,7 +8,7 @@ tar xf boost_1_57_0.tar.gz
 mv boost_1_57_0 boost
 cd boost
 ./bootstrap.sh --prefix=/usr
-sudo ./b2 --prefix=/usr link=shared threading=multi address-model=64 architecture=x86
+sudo ./b2 --prefix=/usr link=static threading=multi address-model=64 architecture=x86
 cd ..
 sudo rm -rf boost boost_1_57_0.tar.gz
 
