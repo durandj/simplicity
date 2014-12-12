@@ -4,7 +4,7 @@ sudo apt-get -qq update &&
 sudo apt-get -qq install gettext xorg-dev libx11-xcb-dev libxcb-util0-dev
 
 wget -O boost_1_57_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.57.0/boost_1_57_0.tar.gz/download
-tar xvf boost_1_57_0.tar.gz
+tar xf boost_1_57_0.tar.gz
 mv boost_1_57_0 boost
 cd boost
 ./bootstrap.sh --prefix=/usr
