@@ -3,7 +3,7 @@
 sudo apt-get -qq update &&
 sudo apt-get -qq install gettext xorg-dev libx11-xcb-dev libxcb-util0-dev
 
-wget --quiet -O boost_1_57_0.tar.gz http://downloads.sourceforge.net/project/boost/boost/1.57.0/boost_1_57_0.tar.gz?r=&ts=1418423036&use_mirror=ufpr
+wget -O boost_1_57_0.tar.gz http://downloads.sourceforge.net/project/boost/boost/1.57.0/boost_1_57_0.tar.gz
 tar xf boost_1_57_0.tar.gz
 mv boost_1_57_0 boost
 cd boost
