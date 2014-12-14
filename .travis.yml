@@ -5,6 +5,6 @@ compiler:
     - gcc
     - clang
 
-install: ./install-deps.sh && cmake .
+install: ./install-deps.py && cmake .
 script: make
 
