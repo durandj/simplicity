@@ -48,7 +48,7 @@ def install_boost():
 
 	os.chdir('boost')
 	run_command(
-		'./bootstrap --prefix=/usr',
+		'./bootstrap.sh --prefix=/usr',
 	)
 
 	run_command(
