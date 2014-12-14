@@ -36,7 +36,7 @@ def run_command(cmd, regex = None):
 		)
 
 		if regex:
-			while process.poll():
+			while not process.poll():
 				print(process.stdout.readlines())
 				#line = process.stdout.readline()
 
