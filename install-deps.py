@@ -39,7 +39,7 @@ def run_command(cmd, regex = None):
 			while not process.poll():
 				line = process.stdout.readline()
 
-				if regex.findall():
+				if regex.findall(line):
 					better_print(
 						line,
 					)
