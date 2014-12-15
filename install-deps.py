@@ -25,7 +25,7 @@ def better_print(message, *args, **kwargs):
 		)
 	)
 
-def run_command(cmd, regex = None):
+def run_command(cmd, regex = None, indent = 0):
 	try:
 		process = subprocess.Popen(
 			shlex.split(
@@ -41,7 +41,7 @@ def run_command(cmd, regex = None):
 
 				if regex.findall(line):
 					better_print(
-						line,
+						'\t' * indent + line.rstrip(),
 					)
 
 		stdout, stderr = process.communicate()
@@ -110,10 +110,11 @@ def install_boost():
 	better_print('\tBuilding Boost...')
 	run_command(
 		'sudo ./b2 --prefix=/usr -q link=static threading=multi address-model=64 architecture=x86 install',
-		re.compile(
+		regex = re.compile(
 			r'^...on \d+th target...$',
 			REGEX_FLAGS,
 		),
+		indent = 2,
 	)
 	os.chdir('..')
 
