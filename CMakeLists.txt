@@ -4,6 +4,11 @@ project(Simplicity)
 
 add_definitions(-std=gnu++11)
 
+# Make options
+option(BOOST_LINK "The link type to Boost (static/shared)" "static")
+
+# Version info
+
 set(Simplicity_VERSION_MAJOR 0)
 set(Simplicity_VERSION_MINOR 0)
 set(Simplicity_VERSION_PATCH 0)
@@ -23,10 +28,18 @@ configure_file(
 
 include_directories("${PROJECT_BINARY_DIR}")
 
-# Libraries and includes
-set(Boost_USE_STATIC_LIBS ON)
+#Libraries and includes
+if(BOOST_LINK STREQUAL "static")
+	set(Boost_USE_STATIC_LIBS ON)
+	set(Boost_USE_STATIC_RUNTIME ON)
+elseif(BOOST_LINK STREQUAL "shared")
+	set(Boost_USE_STATIC_LIBS OFF)
+	set(Boost_USE_STATIC_RUNTIME OFF)
+else()
+	message(FATAL_ERROR "Unknown Boost linking option specified")
+endif()
+
 set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME ON)
 
 find_package(PkgConfig REQUIRED)
 
