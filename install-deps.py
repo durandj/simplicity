@@ -37,13 +37,12 @@ def run_command(cmd, regex = None):
 
 		if regex:
 			while not process.poll():
-				print(process.stdout.readlines())
-				#line = process.stdout.readline()
+				line = process.stdout.readline()
 
-				#if regex.findall():
-					#better_print(
-						#line,
-					#)
+				if regex.findall():
+					better_print(
+						line,
+					)
 
 		stdout, stderr = process.communicate()
 	except KeyboardInterrupt:
