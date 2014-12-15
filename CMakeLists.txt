@@ -6,6 +6,7 @@ add_definitions(-std=gnu++11)
 
 # Make options
 option(BOOST_LINK "The link type to Boost (static/shared)" "static")
+option(BOOST_THREADING "Use Boosts multithreading" ON)
 
 # Version info
 
@@ -29,17 +30,17 @@ configure_file(
 include_directories("${PROJECT_BINARY_DIR}")
 
 #Libraries and includes
-if(BOOST_LINK STREQUAL "static")
+if(${BOOST_LINK} STREQUAL "static" OR ${BOOST_LINK} EQUAL OFF)
 	set(Boost_USE_STATIC_LIBS ON)
 	set(Boost_USE_STATIC_RUNTIME ON)
-elseif(BOOST_LINK STREQUAL "shared")
+elseif(${BOOST_LINK} STREQUAL "shared")
 	set(Boost_USE_STATIC_LIBS OFF)
 	set(Boost_USE_STATIC_RUNTIME OFF)
 else()
-	message(FATAL_ERROR "Unknown Boost linking option specified")
+	message(FATAL_ERROR "Unknown Boost linking option specified: ${BOOST_LINK}")
 endif()
 
-set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_MULTITHREADED ${BOOST_THREADING})
 
 find_package(PkgConfig REQUIRED)
 
