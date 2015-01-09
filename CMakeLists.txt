@@ -65,7 +65,7 @@ include_directories(${XCB_UTIL_INCLUDE_DIRS})
 set(CMAKE_CXX_FLAGS_DEBUG -Wall)
 set(CMAKE_C_FLAGS_DEBUG -Wall)
 
-file(GLOB_RECURSE sources ${SRC}/*.hpp ${SRC}/.cpp)
+file(GLOB_RECURSE sources ${SRC}/*.hpp ${SRC}/*.cpp)
 
 add_executable(simplicity "${SRC}/main.cpp" ${sources})
 target_link_libraries(simplicity ${Boost_LIBRARIES} ${XCB_LIBRARIES} ${XCB_UTIL_LIBRARIES})
