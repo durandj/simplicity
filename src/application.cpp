@@ -116,6 +116,8 @@ namespace simplicity
 			delete pEvent; // TODO: necessary?
 		}
 
+		xcb_destroy_window(m_pXConnection, xcbWindow);
+
 		xcb_disconnect(m_pXConnection);
 		m_IOService.stop();
 
